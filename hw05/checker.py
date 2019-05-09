@@ -37,10 +37,10 @@ class Checker(object):
         ).astype(int)
 
         pvalue = evaluate(
-            train_conversions, 
-            train_indices,
             test_conversions,
-            test_indices
+            test_indices,
+            train_conversions, 
+            train_indices
         )
 
         return pvalue
@@ -55,7 +55,7 @@ class Checker(object):
 
     def check(self, script_path):
         AUTHOR_EMAIL = None
-        random_gen = np.random.RandomState(42)
+        random_gen = np.random.RandomState(75)
         try:
             signal.signal(signal.SIGALRM, signal_handler)
             signal.alarm(120)
@@ -72,7 +72,7 @@ class Checker(object):
 
             print(correctness, power_005, power_010, power_050)
 
-            return AUTHOR_EMAIL, power_050 + power_010 * 4 + power_005 * 16
+            return AUTHOR_EMAIL, float(power_050 + power_010 * 4 + power_005 * 16)
         except:
             traceback.print_exception(*sys.exc_info())
             return AUTHOR_EMAIL, None
